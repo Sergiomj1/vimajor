@@ -13,7 +13,7 @@ class VideoController extends Controller
 
     public function index(Request $request)
     {
-        $request->user()->authorizeRoles(['loaders']);
+        return view('home',compact('videos'));
     }
 
     /**
@@ -21,9 +21,9 @@ class VideoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function videoCreate(Request $request)
+    public function create (Request $request)
     {
-        $request->user()->authorizeRoles(['loaders']);
+        $request->user()->authorizeRoles(['loaders','admin']);
         return view('video/videocreate');
     }
 
@@ -34,7 +34,7 @@ class VideoController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function videoCreatePost(Request $request)
+    public function store(Request $request)
     {
         if ($request->file() && $request->title && $request->description && $request->duration) {
 
@@ -53,7 +53,7 @@ class VideoController extends Controller
 
 
             if( $video->save() ) {
-                return 'Se ha subido con exito!';
+                return redirect()->route('home');
             }
 
 
@@ -71,7 +71,8 @@ class VideoController extends Controller
      */
     public function show($id)
     {
-        //
+        $video= Video::find($id);
+        return view('video.show',compact('video'));
     }
 
     /**
@@ -103,9 +104,12 @@ class VideoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request,  $id)
     {
-        //
+        $request->user()->authorizeRoles(['admin']);
+        $video = Video::find($id);
+        $video->delete();
+        return redirect()->route('video');
     }
 }
 

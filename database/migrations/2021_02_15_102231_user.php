@@ -24,6 +24,7 @@ class User extends Migration
             $table->string('imagen',255);
             $table->bigInteger('role_id')->unsigned();
             $table->foreign('role_id')->references('id')->on('role')->onDelete('cascade');
+            $table->string('remember_token',255);
 
 
         });
@@ -37,7 +38,7 @@ class User extends Migration
     public function down()
     {
         Schema::table('user', function (Blueprint $table) {
-            //
+
         });
     }
 }

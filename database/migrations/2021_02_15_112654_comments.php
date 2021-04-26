@@ -18,6 +18,7 @@ class Comments extends Migration
             $table->id();
             $table->string("comment",255);
             $table->timestamp('created_at');
+            $table->integer("puntuacion",5);
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
             $table->bigInteger('video_id')->unsigned();

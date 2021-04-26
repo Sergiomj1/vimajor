@@ -28,27 +28,7 @@ class UserController extends Controller
         return view('changePassword');
     }
 
-//    public function edit(){
-//        $usuario = User::find(Auth::User()->id);
-//        if(empty($usuario)){
-//            Flash::error('mensaje error');
-//            return redirect()->back();
-//        }
-//        return view('editarperfil')->with('usuario', $usuario);
-//    }
 //
-//    public function update(Request $request){
-//        $usuario = User::find(Auth::User()->id);
-//        if(empty($usuario)){
-//            Flash::error('mensaje error');
-//            return redirect()->back();
-//        }
-//        $usuario->fill($request->all());
-//        $usuario->save();
-//        Flash::success('Perfil actualizado con éxito.');
-//        return redirect(route('home'));
-//    }
-
 
     public function myprofile (){
 
@@ -92,13 +72,6 @@ class UserController extends Controller
     }
 
 
-
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function updatepassword(Request $request)
     {
         if ($request->method() == 'POST') {
@@ -110,7 +83,7 @@ class UserController extends Controller
 
             auth()->user()->update(['password' => Hash::make($request->new_password)]);
 
-            dd('Password change successfully.');
+
         }
 
         return view('profiles/updatepassword');

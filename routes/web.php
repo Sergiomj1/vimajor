@@ -1,7 +1,9 @@
 <?php
-
+use App\Http\Controllers\AdminvideoController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VideoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,11 +27,15 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Auth::routes();
 
+
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-Route::get('/videocreate', [App\Http\Controllers\VideoController::class, 'videoCreate'])->middleware('auth')->name('video.create');
-Route::post('/videocreate',[App\Http\Controllers\VideoController::class, 'videoCreatePost'])->middleware('auth')->name('video.create.post');
+
+
+
+
 
 Route::resource('dashboard','AdminController');
 
@@ -43,3 +49,22 @@ Route::post( '/changeemail',[App\Http\Controllers\UserController::class, 'change
 
 Route::get( '/updatepassword',[App\Http\Controllers\UserController::class, 'updatepassword'])->name('profiles.updatepassword');
 Route::post( '/updatepassword',[App\Http\Controllers\UserController::class, 'updatepassword'])->name('profiles.updatepassword');
+
+
+
+Route::resource('video', VideoController::class)->middleware('auth','permission:admin');
+
+Route::resource('adminvideo', AdminvideoController::class)->middleware('auth','permission:admin');
+
+Route::resource('admin', AdminController::class)->middleware('auth','permission:admin');
+
+Route::get('/deleteuser', function () {
+
+    return view ('admin.index');
+
+
+}) ->name('deleteuser')->middleware('auth', 'role:admin');
+
+
+
+
